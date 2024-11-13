@@ -1,20 +1,15 @@
 const { Task } = require("../models");
 const {Op}=require('sequelize')
 
-/**
- * Get all tasks for the authenticated user with optional filtering and sorting
- */
 exports.getTasks = async (req, res) => {
   try {
     const { priority, status, startDate, endDate, sortBy, order } = req.query;
 
-    // Filtering options
     const where = { userId: req.user.id };
     if (priority) where.priority = priority;
     if (status) where.status = status;
     if (startDate && endDate) where.dueDate = { [Op.between]: [startDate, endDate] };
 
-    // Sorting options
     const orderBy = [];
     if (sortBy) {
       orderBy.push([sortBy, order === "desc" ? "DESC" : "ASC"]);
@@ -38,10 +33,6 @@ exports.getTaskById = async (req, res) => {
   }
 };
 
-
-/**
- * Create a new task
- */
 exports.createTask = async (req, res) => {
   try {
     const { title, description, priority, dueDate, status } = req.body;
@@ -61,9 +52,6 @@ exports.createTask = async (req, res) => {
   }
 };
 
-/**
- * Update a task (accessible only by the creator)
- */
 exports.updateTask = async (req, res) => {
   try {
     const { id } = req.params;
@@ -86,9 +74,6 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-/**
- * Delete a task (accessible only by the creator)
- */
 exports.deleteTask = async (req, res) => {
   try {
     const { id } = req.params;

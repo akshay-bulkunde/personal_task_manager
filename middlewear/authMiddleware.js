@@ -9,8 +9,8 @@ module.exports = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_TOKEN);
-    req.user = decoded; // Attach decoded user data to the request object
-    console.log('User decoded from token:', req.user); // Debugging log
+    req.user = decoded; 
+    console.log('User decoded from token:', req.user); 
     next();
   } catch (error) {
     return res.status(400).json({ error: 'Invalid or expired token.' });

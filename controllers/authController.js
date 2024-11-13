@@ -5,7 +5,7 @@ const { User } = require("../models");
 exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    console.log("Received Password:", username); // Log to check if password is coming through
+    console.log("Received Password:", username); 
     if (!password) {
       return res.status(400).json({ error: "Password is required" });
     }
